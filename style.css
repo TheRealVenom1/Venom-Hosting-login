@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+:root {
+    --primary: #00ff88;
+    --bg-dark: #0a0a0b;
+    --card-bg: #141416;
+    --text-main: #ffffff;
+    --text-dim: #a1a1aa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+.page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Glass Card Auth */
+.glass-card {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 24px;
+    border: 1px solid #27272a;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.logo { font-size: 2rem; font-weight: 800; margin-bottom: 5px; }
+.logo span { color: var(--primary); }
+.subtitle { color: var(--text-dim); margin-bottom: 30px; }
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    background: #1d1d20;
+    border: 1px solid #27272a;
+    border-radius: 12px;
+    color: white;
+    outline: none;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3); }
+
+.divider { margin: 20px 0; color: #3f3f46; font-size: 0.8rem; }
+
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: black;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dashboard UI */
+.navbar {
+    width: 100%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+}
+
+.status-indicator {
+    background: #1d1d20;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.welcome-hero { text-align: center; margin-bottom: 60px; margin-top: 100px; }
+.venom-glow { color: var(--primary); text-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+
+.btn-balance-trigger {
+    margin-top: 25px;
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-balance-trigger:hover { background: var(--primary); color: black; }
+
+/* Pricing Grid */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.plan-card {
+    background: var(--card-bg);
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid #27272a;
+    text-align: center;
+    position: relative;
+    transition: 0.3s;
+}
+
+.plan-card.featured { border-color: var(--primary); transform: scale(1.05); }
+
+.hot-tag {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: black;
+    padding: 4px 12px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.price { font-size: 2rem; font-weight: 800; margin: 20px 0; color: var(--primary); }
+.price span { font-size: 1rem; color: var(--text-dim); }
+
+.specs { list-style: none; text-align: left; margin-bottom: 30px; }
+.specs li { padding: 10px 0; border-bottom: 1px solid #27272a; font-size: 0.9rem; color: var(--text-dim); }
+
+.btn-buy {
+    width: 100%;
+    padding: 12px;
+    background: #27272a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-buy:hover { background: var(--primary); color: black; }
