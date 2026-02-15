@@ -3,92 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venom Hosting | Official</title>
+    <title>Venom Hosting | Number One On Egypt</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="auth-page" class="page-container">
+    <div id="auth-container" class="page-container">
         <div class="glass-card">
             <h1 class="logo">VENOM <span>HOSTING</span></h1>
-            <p class="subtitle">Power up your bots today.</p>
+            <p id="status-msg">Create an account or login</p>
             
-            <div class="input-group">
-                <input type="email" placeholder="Email Address">
-                <input type="password" placeholder="Password">
-            </div>
-
-            <button class="btn-primary" onclick="showDashboard()">Login / Register</button>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password">
             
+            <button class="btn-primary" id="loginBtn">Login / Register</button>
             <div class="divider">OR</div>
-
-            <button class="btn-google" onclick="showDashboard()">
+            
+            <button class="btn-google" id="googleBtn">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="20">
                 Sign in with Google
             </button>
         </div>
     </div>
 
-    <div id="dashboard-page" class="page-container" style="display: none;">
+    <div id="dashboard" class="page-container" style="display:none;">
         <nav class="navbar">
             <div class="logo">VENOM</div>
             <div class="status-indicator">Listening to Venom</div>
         </nav>
-
         <div class="welcome-hero">
             <h1>Welcome to <span class="venom-glow">Venom Hosting</span></h1>
-            <p>Your ultimate destination for high-performance bot hosting.</p>
-            <button class="btn-balance-trigger" onclick="scrollToPlans()">Check Balance & Plans</button>
+            <p id="user-display">Loading user...</p>
+            <button class="btn-balance-trigger">View Plans</button>
+            <button onclick="logout()" style="background:none; border:none; color:red; cursor:pointer; margin-top:10px;">Logout</button>
         </div>
-
-        <div id="plans" class="plans-grid">
+        
+        <div class="plans-grid">
             <div class="plan-card">
                 <h3>Starter Bot</h3>
-                <div class="price">500k <span>Credits/Mo</span></div>
+                <div class="price">500k <span>Credits</span></div>
                 <ul class="specs">
-                    <li>512 MB RAM</li>
-                    <li>50% CPU Core</li>
-                    <li>DDoS Protection</li>
-                    <li>Instant Setup</li>
+                    <li>512 MB RAM | 50% CPU</li>
                 </ul>
-                <button class="btn-buy">Get Started</button>
+                <button class="btn-buy">Buy Now</button>
             </div>
-
-            <div class="plan-card featured">
-                <div class="hot-tag">Best Value</div>
-                <h3>Venom Pro</h3>
-                <div class="price">1.5M <span>Credits/Mo</span></div>
-                <ul class="specs">
-                    <li>2 GB RAM</li>
-                    <li>150% CPU Core</li>
-                    <li>24/7 Support</li>
-                    <li>Daily Backups</li>
-                </ul>
-                <button class="btn-buy">Get Started</button>
             </div>
-
-            <div class="plan-card">
-                <h3>Symbiote Elite</h3>
-                <div class="price">4M <span>Credits/Mo</span></div>
-                <ul class="specs">
-                    <li>8 GB RAM</li>
-                    <li>400% CPU Core</li>
-                    <li>Unlimited Slots</li>
-                    <li>Premium Network</li>
-                </ul>
-                <button class="btn-buy">Get Started</button>
-            </div>
-        </div>
     </div>
 
-    <script>
-        function showDashboard() {
-            document.getElementById('auth-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = 'block';
-        }
-        function scrollToPlans() {
-            document.getElementById('plans').scrollIntoView({ behavior: 'smooth' });
-        }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // --- إعدادات Firebase الخاصة بيك ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // دخول بجوجل
+        document.getElementById('googleBtn').onclick = () => {
+            signInWithPopup(auth, provider).catch(err => alert(err.message));
+        };
+
+        // دخول بإيميل وباسورد
+        document.getElementById('loginBtn').onclick = () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, email, pass).catch(() => {
+                createUserWithEmailAndPassword(auth, email, pass).catch(err => alert(err.message));
+            });
+        };
+
+        // مراقبة حالة المستخدم (هل هو مسجل دخول أم لا)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('auth-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex';
+                document.getElementById('user-display').innerText = `Hello, ${user.displayName || user.email}! Welcome to Venom Hosting.`;
+            } else {
+                document.getElementById('auth-container').style.display = 'flex';
+                document.getElementById('dashboard').style.display = 'none';
+            }
+        });
+
+        window.logout = () => signOut(auth);
     </script>
 </body>
 </html>
